@@ -3,11 +3,6 @@ from pymavlink import mavutil
 
 HOST = '127.0.0.1'  # (localhost)
 PORT = 65432  
-is_connected =False
-is_armed=False
-is_takeoff=False  
-
-
 
 #Starting a connection
 def connexion():
@@ -15,6 +10,7 @@ def connexion():
     #Waiting for the heartbeat 
     connection.wait_heartbeat()
     print("Heartbeat from system (system %u component %u)" % (connection.target_system, connection.target_component))
+    print('\n')
     return connection
 
 #Arming command
@@ -24,6 +20,7 @@ def arm(connection):
     #Printing command_ack(nowledge) to see if the command worked (0 means yes and 4 no)
     arming_ack_msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
     print(arming_ack_msg)
+    print('\n')
 
 #Takeoff command
 def takeoff(connection):
@@ -31,6 +28,7 @@ def takeoff(connection):
                                      mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 10)
     takeoff_ack_msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
     print(takeoff_ack_msg)
+    print('\n')
 
 #Landing command
 def land(connection):
@@ -38,6 +36,7 @@ def land(connection):
                                      0, 0, 0, 0, 0, 0, 0, 0)
     landing_ack_msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
     print(landing_ack_msg)
+    print('\n')
 
 #Disarming command
 def disarm(connection):
@@ -45,9 +44,12 @@ def disarm(connection):
                                      mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 0, 0, 0, 0, 0, 0, 0)
     disarming_ack_msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
     print(disarming_ack_msg)
+    print('\n')
 
 
 def serverTCP():
+    is_armed=False
+    is_takeoff=False 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
         s.listen()
@@ -58,28 +60,24 @@ def serverTCP():
             while True:
                 data = conn.recv(1024)
                 message = data.decode('utf-8')
-                print("data =",data)
-                if(message == "connexion\n" and is_connected==False):
-                    connection = connexion()
-                    is_connected = True
-                elif(message =="arm\n"  and is_connected and is_armed==False):
+                connection = connexion()
+                if(message =="arm\n" and is_armed==False):
                     arm(connection)
                     is_armed=True
-                elif(message =="disarm\n" and is_connected  and is_armed and is_takeoff == False):
+                elif(message =="disarm\n" and is_armed and is_takeoff == False):
                     disarm(connection)
                     is_armed=False
-                elif(message =="takeoff\n" and is_connected and is_armed and is_takeoff == False):
+                elif(message =="takeoff\n" and is_armed and is_takeoff == False):
                     takeoff(connection)
                     is_takeoff=True
-                elif(message =="land\n" and is_connected and is_armed and is_takeoff):
+                elif(message =="land\n" and is_armed and is_takeoff):
                     land(connection)
                     is_takeoff=False
                 elif(message =="exit\n"):
                     print("exit\n")
-                    is_connected=False
                     break
                 else:
-                    print("Command not found\n")   
+                    print("Command not found or unavailable\n")   
                 if not message:
                     break
                
