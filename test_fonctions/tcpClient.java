@@ -22,8 +22,8 @@ public class tcpClient {
                 line = scanner.nextLine();
                 out.println(line);
                 System.out.println("Sent message: "+line);
-                scanner.close();
                 if(line.compareTo("exit")==0){
+                    scanner.close();
                     break;
                 }
             }
