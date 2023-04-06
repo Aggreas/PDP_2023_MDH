@@ -12,6 +12,7 @@ connection.mav.command_long_send(connection.target_system, connection.target_com
 msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
 print(msg)
 
+
 #TAKEOFF #22
 #connection.mav.command_long_send(connection.target_system, connection.target_component, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 10)
 connection.mav.command_int_send(connection.target_system, connection.target_component, 0, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 0, 10.0)
@@ -19,3 +20,4 @@ connection.mav.command_int_send(connection.target_system, connection.target_comp
 msg = connection.recv_match(type='COMMAND_ACK', blocking=True)
 print(msg)
 
+#if(msg.result == 0):
