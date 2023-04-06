@@ -9,6 +9,7 @@ public class tcpClient {
         int portNumber = 65432;
         Scanner scanner;
         String line ;
+        String serv_response;
         try (
             Socket echoSocket = new Socket(hostName, portNumber);
             PrintWriter out =
@@ -22,10 +23,12 @@ public class tcpClient {
                 line = scanner.nextLine();
                 out.println(line);
                 System.out.println("Sent message: "+line);
+                scanner.close();
                 if(line.compareTo("exit")==0){
-                    scanner.close();
                     break;
                 }
+                serv_response=in.readLine();
+                System.out.println(serv_response);
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
