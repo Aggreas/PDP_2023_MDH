@@ -46,6 +46,13 @@ def disarm(connection):
     print(disarming_ack_msg)
     print('\n')
 
+#Coordonnees GPS
+def gps(connection):
+    x = connection.messages['LOCAL_POSITION_NED'].x
+    y = connection.messages['LOCAL_POSITION_NED'].y
+    z = connection.messages['LOCAL_POSITION_NED'].z
+    return (x,y,z)
+
 
 def serverTCP():
     is_armed=False
@@ -60,7 +67,8 @@ def serverTCP():
             while True:
                 data = conn.recv(1024)
                 message = data.decode('utf-8')
-                connection = connexion()
+                if(message =="connexion\n"):
+                    connection = connexion()
                 if(message =="arm\n" and is_armed==False):
                     arm(connection)
                     is_armed=True
@@ -73,6 +81,9 @@ def serverTCP():
                 elif(message =="land\n" and is_armed and is_takeoff):
                     land(connection)
                     is_takeoff=False
+                elif(message =="gps\n"):
+                    (x,y,z)=gps(connection)
+                    conn.sendall("x = "+x+" y = "+y+" z = "+z)
                 elif(message =="exit\n"):
                     print("exit\n")
                     break
