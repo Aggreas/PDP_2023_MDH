@@ -32,11 +32,8 @@ public class Client {
 			input = new BufferedReader(new InputStreamReader(System.in));
 
 			// and the output that is connected to the Socket
-			in = 
-				new BufferedReader(
-                            new InputStreamReader(socket.getInputStream())); 
-			out =
-                new PrintWriter(socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
+			out = new PrintWriter(socket.getOutputStream(), true);
 		} 
 		catch(UnknownHostException u) 
 		{ 
