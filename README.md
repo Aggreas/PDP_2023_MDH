@@ -5,4 +5,4 @@
 -Allumer un Drone ou un Simulateur <br />
 -Lancer l'application mobile <br />
 
-Enjoy!
+Enjoy! (hopefully)
