@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Controleur de Drone</string>
+    <string name="connexion">se connecter</string>
+    <string name="identifiant">identifiant</string>
+    <string name="motDePasse">mot de passe</string>
+    <string name="on">allumer moteur</string>
+    <string name="off">eteindre moteur</string>
+    <string name="takeof">decoller</string>
+    <string name="land">atterrir</string>
+    <string name="cameraOn">allumer camera</string>
+    <string name="cameraOff">eteindre camera</string>
+    <string name="position">actualiser position</string>
+
+
+</resources>
