@@ -49,13 +49,11 @@ def disarm(connection):
     print(disarming_ack_msg)
     print('\n')
 
-#Coordonnees GPS
+#gps coordinates
 def gps(connection, s):
     alt_var = connection.messages['GLOBAL_POSITION_INT'].relative_alt #en mm
     s.sendall((alt_var/1000).encode)
     
-
-
 def threadGPS(connection, s):
     while True:
         gps(connection, s)
@@ -86,23 +84,18 @@ def serverTCP():
                     t = threading.Thread(target = gps, args =(connection,s))
                     t.start()
                 elif(message =="arm\n" and is_armed==False and is_connected):
-                    #arm(connection)
-                    print("arm")
+                    arm(connection)
                     is_armed=True
                 elif(message =="disarm\n" and is_armed and is_takeoff == False):
-                    #disarm(connection)
-                    print("disarm")
+                    disarm(connection)
                     is_armed=False
                 elif(message =="takeoff\n" and is_armed and is_takeoff == False):
-                    #takeoff(connection)
-                    print("takeoff")
+                    takeoff(connection)
                     is_takeoff=True
                 elif(message =="land\n" and is_armed and is_takeoff):
-                    #land(connection)
-                    print("land")
+                    land(connection)
                     is_takeoff=False
                 elif(message =="exit\n"):
-                    print("exit\n")
                     break
                 else:
                     print("Command not found or unavailable\n")   
