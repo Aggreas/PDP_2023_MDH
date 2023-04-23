@@ -101,17 +101,3 @@ def serverTCP():
                     print("Command not found or unavailable\n")   
                 if not message:
                     break
-               
-
-#serverTCP()
-print("Server listening on 10.200.74.218:32568")
-print("Connected by ('10.200.74.213', 50730)")
-print("connexion par un admin")
-print()
-print("arm")
-print()
-print("takeOff")
-print()
-print("land")
-print()
-print("disarm")
