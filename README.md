@@ -1,7 +1,7 @@
-# PDP_2023_Mav
+# PDP_2023_MDH
 
-1er terminal:
-HEADLESS=1 make px4_sitl gz_x500
+En Python, lancer le Serveur
 
-2ème terminal:
-python3 arm_takeoff.py
+Monter le Client/Application mobile sur un support correct et la lancer
+
+Enjoy!
